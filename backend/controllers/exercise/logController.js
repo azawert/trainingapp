@@ -2,6 +2,7 @@
 //@route POST /api/exercises/log
 // @access only logged in
 import ExerciseLog from "../../models/exerciseLogModel.js";
+import asyncHandler from "express-async-handler";
 
 export const createNewExerciseLog = async (req, res) => {
   const { exerciseId, times } = req.body;
@@ -29,3 +30,20 @@ export const createNewExerciseLog = async (req, res) => {
   });
   return res.json(exerciseLog);
 };
+
+// @desc get exercise log
+//@route GET /api/exercises/log:id
+// @access only logged in
+
+export const getExerciseLog = asyncHandler(async (req, res) => {
+  const exerciseLog = await ExerciseLog.findById(req.params.id).populate(
+    "exercise",
+    "name imageId"
+  );
+  if (!exerciseLog) {
+    return res.status(404).json({
+      errorMessage: "Лог не найден :(",
+    });
+  }
+  return res.json(exerciseLog);
+});
