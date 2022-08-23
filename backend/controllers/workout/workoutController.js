@@ -2,6 +2,7 @@
 //@route POST /api/workout
 // @access only logged in
 
+import Exercise from "../../models/exerciseModel.js";
 import Workout from "../../models/workoutModel.js";
 
 export const addNewWorkout = async (req, res) => {
@@ -9,6 +10,12 @@ export const addNewWorkout = async (req, res) => {
   if (!name) {
     return res.status(400).json({
       errorMessage: "Тренировке необходимо дать название!",
+    });
+  }
+  const findExercise = Exercise.findById(exerciseIds);
+  if (!findExercise) {
+    return res.status(404).json({
+      errorMessage: "Не удалось найти упражнение",
     });
   }
   if (!exerciseIds) {

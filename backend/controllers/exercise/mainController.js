@@ -5,16 +5,16 @@
 import Exercise from "../../models/exerciseModel.js";
 
 export const addNewExercise = async (req, res) => {
-  const { name, image, times } = req.body;
-  if (!name || !image || !times) {
+  const { name, imageId, times } = req.body;
+  if (!name) {
     return res.status(400).json({
-      errorMessage: "Заполните все необходимые поля!",
+      errorMessage: "Введите название упражнения",
     });
   }
 
   const exercise = await Exercise.create({
     name,
-    image,
+    imageId,
     times,
   });
   res.json(exercise);
