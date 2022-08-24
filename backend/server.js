@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.use("/api/users", userRoutes);
 app.use("/api/exercises", exerciseRoutes);
-app.use("/api/workout", workoutRoutes);
+app.use("/api/workouts", workoutRoutes);
 
 const PORT = process.env.PORT || 9999;
 

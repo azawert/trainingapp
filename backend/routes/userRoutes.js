@@ -6,8 +6,8 @@ import { registrationValidator } from "../validations.js";
 import { protect } from "../utils/authMiddleware.js";
 import { authUser } from "../controllers/user/authController.js";
 const router = Router();
-router.route("/profile").get(protect, getUserProfile);
-router.route("/").post(registrationValidator, handleValidation, registerUser);
-router.route("/login").post(registrationValidator, handleValidation, authUser);
+router.get("/profile", protect, getUserProfile);
+router.post("/", registrationValidator, handleValidation, registerUser);
+router.post("/login", registrationValidator, handleValidation, authUser);
 
 export default router;

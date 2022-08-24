@@ -4,6 +4,7 @@
 
 import Exercise from "../../models/exerciseModel.js";
 import Workout from "../../models/workoutModel.js";
+import asyncHandler from "express-async-handler";
 
 export const addNewWorkout = async (req, res) => {
   const { name, exerciseIds } = req.body;
@@ -39,11 +40,51 @@ export const getWorkout = async (req, res) => {
   const workout = await Workout.findById(req.params.id)
     .populate("exercises")
     .lean();
-  const minutes = Math.ceil(workout.exercises.length * 3.7);
+  if (workout) {
+    const minutes = Math.ceil(workout.exercises.length * 3.7);
+    res.json({ ...workout, minutes });
+  }
   if (!workout) {
     return res.status(400).json({
       errorMessage: "Тренировка не найдена",
     });
   }
-  res.json({ ...workout, minutes });
 };
+
+//@desc update workouts
+//@route PUT /api/workouts
+//@access private
+export const updateWorkout = asyncHandler(async (req, res) => {
+  const { name, exerciseIds, workoutId } = req.body;
+
+  const workout = await Workout.findById(workoutId);
+
+  if (!workout) {
+    return res.status(404).json({
+      errorMessage: "Не найдена тренировка",
+    });
+  }
+
+  workout.name = name;
+  workout.exercises = exerciseIds;
+  const updatedWorkout = await workout.save();
+
+  return res.json(updatedWorkout);
+});
+
+//@desc delete workout
+//@route DELETE /api/workouts
+//@access private
+export const deleteWorkout = asyncHandler(async (req, res) => {
+  const { workoutId } = req.body;
+  const workout = await Workout.findById(workoutId);
+  if (!workout) {
+    return res.status(404).json({
+      errorMessage: "Тренировка не найдена...",
+    });
+  }
+  workout.remove();
+  return res.json({
+    message: "Тренировка успешно удалена",
+  });
+});
