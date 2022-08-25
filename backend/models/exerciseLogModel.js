@@ -29,6 +29,11 @@ const exerciseLogSchema = mongoose.Schema(
         },
       },
     ],
+    workoutLog: {
+      type: ObjectId,
+      ref: "WorkoutLog",
+      required: true,
+    },
   },
   {
     timestamps: true,

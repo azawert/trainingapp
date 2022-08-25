@@ -8,17 +8,25 @@ import asyncHandler from "express-async-handler";
 
 export const addNewWorkout = async (req, res) => {
   const { name, exerciseIds } = req.body;
+  const workoutExists = await Workout.findOne({
+    name,
+  });
+  if (workoutExists) {
+    return res.status(400).json({
+      errorMessage: "Такое название тренировки уже занято",
+    });
+  }
   if (!name) {
     return res.status(400).json({
       errorMessage: "Тренировке необходимо дать название!",
     });
   }
-  const findExercise = Exercise.findById(exerciseIds);
-  if (!findExercise) {
-    return res.status(404).json({
-      errorMessage: "Не удалось найти упражнение",
-    });
-  }
+  // const findExercise = await Exercise.findById(exerciseIds);
+  // if (!findExercise) {
+  //   return res.status(404).json({
+  //     errorMessage: "Не удалось найти упражнение",
+  //   });
+  // }
   if (!exerciseIds) {
     return res.status(500).json({
       errorMessage: "Не удалось получить упражнения ",
@@ -88,3 +96,18 @@ export const deleteWorkout = asyncHandler(async (req, res) => {
     message: "Тренировка успешно удалена",
   });
 });
+
+// @desc Get workouts
+//@route GET /api/workouts
+// @access only logged in
+
+export const getWorkouts = async (req, res) => {
+  const workouts = await Workout.find({}).populate("exercises");
+  if (!workouts || workouts.length === 0) {
+    return res.status(404).json({
+      errorMessage: "Тренировки не найдены...",
+    });
+  }
+
+  res.json(workouts);
+};

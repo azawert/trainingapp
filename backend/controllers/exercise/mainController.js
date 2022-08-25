@@ -12,7 +12,14 @@ export const addNewExercise = async (req, res) => {
       errorMessage: "Введите название упражнения",
     });
   }
-
+  const exerciseExist = await Exercise.findOne({
+    name,
+  });
+  if (exerciseExist) {
+    return res.status(400).json({
+      errorMessage: "Данное название уже занято.",
+    });
+  }
   const exercise = await Exercise.create({
     name,
     imageId,
@@ -80,3 +87,18 @@ export const deleteExercise = asyncHandler(async (req, res) => {
     message: "Упражнение успешно удалено",
   });
 });
+
+// @desc Get exercises
+//@route GET /api/exercises
+// @access only logged in
+
+export const getExercises = async (req, res) => {
+  const exercise = await Exercise.find({});
+  if (!exercise) {
+    return res.status(404).json({
+      errorMessage: "Упражнение не найдено...",
+    });
+  }
+
+  res.json(exercise);
+};

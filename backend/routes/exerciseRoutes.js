@@ -6,6 +6,7 @@ import {
   addNewExercise,
   deleteExercise,
   getExercise,
+  getExercises,
   updateExercise,
 } from "../controllers/exercise/mainController.js";
 import { createNewExerciseLog } from "../controllers/exercise/log/createController.js";
@@ -24,5 +25,6 @@ router.put("/log", protect, updateExerciseLog);
 router.put("/log/completed", protect, updateCompleteExerciseLog);
 router.put("/", protect, exerciseValidator, handleValidation, updateExercise);
 router.delete("/", protect, deleteExercise);
+router.get("/", protect, getExercises);
 
 export default router;
