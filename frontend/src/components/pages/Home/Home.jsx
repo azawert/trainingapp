@@ -13,9 +13,9 @@ const Home = () => {
           type="main"
           text="New"
           callback={() => {}}
-          className={styles["home-wrapper"]}
+          className={styles.button}
         />
-        <h1>EXERCSISES FOR</h1>
+        <h1 className={styles.heading}>EXERCSISES FOR</h1>
         <Counters />
       </Layout>
     </div>
