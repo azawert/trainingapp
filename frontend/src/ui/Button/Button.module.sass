@@ -1,0 +1,18 @@
+@import '../../sass/_variables'
+$accent-04: rgba($accent,.4)
+.button
+    font-size: 18px
+    color: #fff
+    border: none
+    outline: none
+    border-radius: 10px
+    padding: 11px 46px
+    cursor: pointer
+    transition: all .2s ease-in-out
+    margin: 0 auto
+    &.main
+        background-color: rgba(255,255,255,.25)
+        &:hover
+            background-color: $accent-04
+    &:hover
+        background-color: rgba($accent,.75)
