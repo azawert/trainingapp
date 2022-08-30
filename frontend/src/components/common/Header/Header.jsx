@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Header.module.sass";
 
 import userImage from "../../../images/header/user.svg";
-import hamburgerImage from "../../../images/header/hamburger.svg";
+import Hamburger from "../Hamburger/Hamburger";
 
 const Header = () => {
   return (
@@ -10,9 +10,7 @@ const Header = () => {
       <button type="button">
         <img src={userImage} alt="auth"></img>
       </button>
-      <button type="button">
-        <img src={hamburgerImage} alt="auth"></img>
-      </button>
+      <Hamburger />
     </header>
   );
 };
