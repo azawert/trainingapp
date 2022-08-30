@@ -4,10 +4,10 @@ import Counters from "../../../ui/Counters/Counters";
 import Layout from "../../common/Layout";
 import styles from "./Home.module.sass";
 
-import bgImage from "../../../images/index.jpg";
+import bgImage from "../../../images/header/home-bg.jpg";
 const Home = () => {
   return (
-    <div>
+    <div className={styles.wrapper}>
       <Layout height="100vh" image={bgImage}>
         <Button
           type="main"
