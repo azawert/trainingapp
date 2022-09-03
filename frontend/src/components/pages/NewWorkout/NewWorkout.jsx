@@ -1,8 +1,9 @@
 import React from "react";
 import ReactSelect from "react-select";
+import { Link } from "react-router-dom";
 import Layout from "../../common/Layout";
 import Field from "../../../ui/Field/Field";
-import styles from "./NewWorkout.module.sass";
+
 import bgImage from "../../../images/Maskgroup.jpg";
 import Button from "../../../ui/Button/Button.jsx";
 
@@ -16,7 +17,7 @@ const NewWorkout = () => {
   return (
     <>
       <Layout image={bgImage} text="Создать новую тренировку" />
-      <div className={styles.wrapper}>
+      <div className="wrapper-inner-page">
         <form onSubmit={() => {}}>
           <Field
             placeholder="Введите название тренировки..."
@@ -24,6 +25,9 @@ const NewWorkout = () => {
             onChangeFunc={onChangeNameField}
           />
         </form>
+        <Link to="/new-exercise" className="darklink">
+          Создать новое упражнение...
+        </Link>
         <ReactSelect
           classNamePrefix="select2-selection"
           placeholder="Упражнения"

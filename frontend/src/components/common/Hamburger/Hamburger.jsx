@@ -2,8 +2,9 @@ import React from "react";
 import hamburgerImage from "../../../images/header/hamburger.svg";
 import hamburgerClose from "../../../images/header/hamburger-close.svg";
 import styles from "./Hamburger.module.sass";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const Hamburger = () => {
+  const location = useLocation();
   const [isShow, setIsShow] = React.useState(false);
   const options = [
     {
@@ -39,9 +40,11 @@ const Hamburger = () => {
                 </li>
               </>
             ))}
-            <li>
-              <a onClick={() => {}}>Logout</a>
-            </li>
+            {location.pathname !== "/auth" && (
+              <li>
+                <a onClick={() => {}}>Logout</a>
+              </li>
+            )}
           </ul>
 
           <nav className={styles.options}></nav>

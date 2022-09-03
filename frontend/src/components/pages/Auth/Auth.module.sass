@@ -1,0 +1,22 @@
+@import  '../../../sass/_variables'
+
+.button_wrapper
+    display: flex
+    align-items: center
+    justify-content: space-between
+    div
+        width: 48%
+        &:last-child
+            button
+                background-color: #20366b !important
+                opacity: .8 !important
+                transition: all .4s ease !important
+                &:hover
+                    background-color: #29478c !important
+                    opacity: 1 !important
+        button
+            width: 100%
+            text-align: center
+            background-color: $purple !important
+            &:hover
+                background-color: darken($purple,5%) !important
