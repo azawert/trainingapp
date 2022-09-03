@@ -8,7 +8,7 @@ import bgImage from "../../../images/header/home-bg.jpg";
 const Home = () => {
   return (
     <div className={styles.wrapper}>
-      <Layout height="100vh" image={bgImage}>
+      <Layout image={bgImage}>
         <Link to="/new-workout">
           <Button
             type="main"

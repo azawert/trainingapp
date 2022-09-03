@@ -16,11 +16,12 @@ const Header = () => {
             src={arrowImage}
             onClick={() => navigate(-1)}
             alt="arrow-back"
+            height={"24px"}
           ></img>
         </button>
       ) : (
         <button type="button">
-          <img src={userImage} alt="auth"></img>
+          <img src={userImage} alt="auth" height={"24px"}></img>
         </button>
       )}
       <Hamburger />

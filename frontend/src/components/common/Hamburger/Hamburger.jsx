@@ -29,6 +29,7 @@ const Hamburger = () => {
             src={hamburgerClose}
             alt="auth"
             onClick={() => setIsShow(!isShow)}
+            height={"24px"}
           ></img>
           <ul className={styles.menu}>
             {options.map((option) => (
@@ -51,6 +52,7 @@ const Hamburger = () => {
             src={hamburgerImage}
             alt="auth"
             onClick={() => setIsShow(!isShow)}
+            height={"24px"}
           ></img>
         </button>
       )}
