@@ -8,8 +8,9 @@ import bgImage from "../../../images/header/home-bg.jpg";
 
 import axios from "axios";
 import { useAuth } from "../../../hooks/useAuth";
-import { useQuery } from "react-query";
+
 import { $api } from "../../../api/api";
+import { useQueryClient, useQuery } from "react-query";
 const Home = () => {
   // const [data, setData] = React.useState({});
   // React.useEffect(() => {
@@ -20,9 +21,11 @@ const Home = () => {
   //   }
   //   fetchData();
   // }, []);
+
   const { isAuth, setIsAuth } = useAuth();
-  const { data, isSuccess } = useQuery(
-    "home page counters",
+  const queryClient = useQueryClient();
+  const { data, isSuccess, isLoading } = useQuery(
+    "getDataFromProfile",
     () =>
       $api({
         url: "/users/profile",
@@ -33,7 +36,9 @@ const Home = () => {
     }
   );
 
-  return (
+  return isLoading ? (
+    "Loading..."
+  ) : (
     <div className={styles.wrapper}>
       <Layout image={bgImage}>
         <Link to="/new-workout">

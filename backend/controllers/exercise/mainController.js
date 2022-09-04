@@ -6,7 +6,7 @@ import Exercise from "../../models/exerciseModel.js";
 import asyncHandler from "express-async-handler";
 
 export const addNewExercise = async (req, res) => {
-  const { name, imageId, times } = req.body;
+  const { name, imageName, times } = req.body;
   if (!name) {
     return res.status(400).json({
       errorMessage: "Введите название упражнения",
@@ -22,7 +22,7 @@ export const addNewExercise = async (req, res) => {
   }
   const exercise = await Exercise.create({
     name,
-    imageId,
+    imageName,
     times,
   });
   res.json(exercise);
@@ -47,7 +47,7 @@ export const getExercise = async (req, res) => {
 //@route PUT /api/exercises
 //@access private
 export const updateExercise = asyncHandler(async (req, res) => {
-  const { name, times, imageId, exerciseId } = req.body;
+  const { name, times, imageName, exerciseId } = req.body;
 
   const exercise = await Exercise.findById(exerciseId);
 
@@ -59,7 +59,7 @@ export const updateExercise = asyncHandler(async (req, res) => {
 
   exercise.name = name;
   exercise.times = times;
-  exercise.image = imageId;
+  exercise.image = imageName;
   if (!name) {
     return exercise.name;
   }

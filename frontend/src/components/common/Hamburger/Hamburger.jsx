@@ -52,7 +52,7 @@ const Hamburger = () => {
             {location.pathname !== "/auth" &&
               (isAuth ? (
                 <li>
-                  <Link to="" onClick={logOut}>
+                  <Link to="/" onClick={logOut}>
                     Logout
                   </Link>
                 </li>

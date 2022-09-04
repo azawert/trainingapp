@@ -4,7 +4,7 @@ import { rebuildTimes } from "../../../utils/exerciseLog.js";
 
 export const getExerciseLog = asyncHandler(async (req, res) => {
   const exerciseLog = await ExerciseLog.findById(req.params.id)
-    .populate("exercise", "name imageId")
+    .populate("exercise", "name imageName")
     .lean();
   if (!exerciseLog) {
     return res.status(404).json({

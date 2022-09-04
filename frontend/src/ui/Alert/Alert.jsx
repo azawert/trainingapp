@@ -10,7 +10,7 @@ const Alert = ({ type = "error", text = "Успех" }) => {
         [styles.success]: type === "success",
       })}
     >
-      <p>{text}</p>
+      <p className={styles.text}>{text}</p>
     </div>
   );
 };
