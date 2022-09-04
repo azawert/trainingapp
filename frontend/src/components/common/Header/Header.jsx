@@ -10,6 +10,9 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuth, setIsAuth } = useAuth();
+  React.useEffect(() => {
+    localStorage.getItem("token") && setIsAuth(true);
+  }, []);
 
   return (
     <header className={styles.header}>
@@ -17,7 +20,7 @@ const Header = () => {
         <button type="button">
           <img
             src={arrowImage}
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/")}
             alt="arrow-back"
           ></img>
         </button>

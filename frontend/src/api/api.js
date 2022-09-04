@@ -38,7 +38,7 @@ export const $api = async ({ url, type = "GET", auth = true, body }) => {
     return data.data;
   } catch (error) {
     throw error.response && error.response.data
-      ? error.response.data.message
+      ? error.response.data.errorMessage
       : error.message;
   }
 };

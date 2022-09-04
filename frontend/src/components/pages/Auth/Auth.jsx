@@ -5,7 +5,7 @@ import bgImage from "../../../images/Maskgroup.jpg";
 import Button from "../../../ui/Button/Button.jsx";
 import styles from "./Auth.module.sass";
 import Alert from "../../../ui/Alert/Alert";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { $api } from "../../../api/api";
 import Loader from "../../../ui/Loader";
@@ -17,6 +17,16 @@ const Auth = () => {
   const [type, setType] = React.useState("auth"); //auth || reg
   const { setIsAuth } = useAuth();
   const navigate = useNavigate();
+  const successLog = (token) => {
+    localStorage.removeItem("token");
+
+    setEmail("");
+    setPassword("");
+    setIsAuth(true);
+    navigate("/");
+    localStorage.setItem("token", token);
+  };
+
   const {
     mutate: register,
     isLoading,
@@ -33,18 +43,31 @@ const Auth = () => {
       }),
     {
       onSuccess(data) {
-        localStorage.setItem("token", data.token);
-        setEmail("");
-        setPassword("");
-        setIsAuth(true);
-        navigate("/");
-      },
-      onError() {
-        console.log(isError);
-        console.log(error);
+        successLog(data.token);
       },
     }
   );
+  const {
+    mutate: auth,
+    isLoading: isLoadingAuth,
+    error: errorAuth,
+    isError: isErrorAuth,
+  } = useMutation(
+    "Authentication",
+    () =>
+      $api({
+        url: "/users/login",
+        type: "POST",
+        body: { email, password },
+        auth: false,
+      }),
+    {
+      onSuccess(data) {
+        successLog(data.token);
+      },
+    }
+  );
+
   const setEmailValue = (e) => {
     setEmail(e.target.value);
   };
@@ -54,7 +77,7 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (type === "auth") {
-      console.log("auth");
+      auth();
     } else {
       if (password.length > 5) {
         register();
@@ -66,11 +89,10 @@ const Auth = () => {
 
   return (
     <>
-      <Layout image={bgImage} text="Регистрация" />
+      <Layout image={bgImage} text="Вход на платформу" />
       <div className="wrapper-inner-page">
-        {isError && (
-          <Alert type="error" text={"Пользователь уже зарегестрирован"} />
-        )}
+        {error && <Alert type="error" text={error} />}
+        {errorAuth && <Alert type="error" text={errorAuth} />}
         {!isPasswordValid && (
           <Alert type="error" text="Пароль должен быть больше 5 символов" />
         )}
@@ -100,113 +122,3 @@ const Auth = () => {
 };
 
 export default Auth;
-// import { useState } from "react";
-
-// import Layout from "../../common/Layout";
-
-// import { useMutation } from "react-query";
-
-// import styles from "./Auth.module.sass";
-// import { $api } from "../../../api/api";
-// import Field from "../../../ui/Field/Field";
-// import Button from "../../../ui/Button/Button";
-
-// const Auth = () => {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [type, setType] = useState("auth");
-
-//   const successLogin = (token) => {
-//     localStorage.setItem("token", token);
-
-//     setPassword("");
-//     setEmail("");
-//   };
-//   const handleEmail = (e) => {
-//     setEmail(e.event.target);
-//     console.log(email);
-//   };
-
-//   const {
-//     mutate: register,
-//     isLoading,
-//     error,
-//   } = useMutation(
-//     "Registration",
-//     () =>
-//       $api({
-//         url: "/users",
-//         type: "POST",
-//         body: { email, password },
-//         auth: false,
-//       }),
-//     {
-//       onSuccess(data) {
-//         successLogin(data.token);
-//       },
-//       onError(e) {
-//         alert("unluck");
-//       },
-//     }
-//   );
-
-//   const {
-//     mutate: auth,
-//     isLoading: isLoadingAuth,
-//     error: errorAuth,
-//   } = useMutation(
-//     "Auth",
-//     () =>
-//       $api({
-//         url: "/users/login",
-//         type: "POST",
-//         body: { email, password },
-//         auth: false,
-//       }),
-//     {
-//       onSuccess(data) {
-//         successLogin(data.token);
-//       },
-//     }
-//   );
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log(password, email);
-//     if (type === "auth") {
-//       auth();
-//     } else {
-//       register();
-//     }
-//   };
-
-//   return (
-//     <>
-//       <Layout bgImage={""} heading="Auth || Register" />
-//       <div className="wrapper-inner-page">
-//         <form onSubmit={handleSubmit}>
-//           <Field
-//             type="email"
-//             placeholder="Enter email"
-//             value={email}
-//             onChange={handleEmail}
-//             required
-//           />
-//           <Field
-//             placeholder="Enter password"
-//             value={password}
-//             onChange={({ target: { value } }) => setPassword(value)}
-//             required
-//             type="password"
-//           />
-//           <div className={styles.wrapperButtons}>
-//             <Button text="Sign in" callback={() => setType("auth")} />
-//             <Button text="Sign up" callback={() => setType("reg")} />
-//           </div>
-//         </form>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Auth;
