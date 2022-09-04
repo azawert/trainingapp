@@ -6,7 +6,7 @@ import Exercise from "../../models/exerciseModel.js";
 import Workout from "../../models/workoutModel.js";
 import asyncHandler from "express-async-handler";
 
-export const addNewWorkout = async (req, res) => {
+export const addNewWorkout = asyncHandler(async (req, res) => {
   const { name, exerciseIds } = req.body;
   const workoutExists = await Workout.findOne({
     name,
@@ -38,7 +38,7 @@ export const addNewWorkout = async (req, res) => {
     exercises: exerciseIds,
   });
   res.json(workout);
-};
+});
 
 // @desc get a single workout
 //@route get /api/workout/:id

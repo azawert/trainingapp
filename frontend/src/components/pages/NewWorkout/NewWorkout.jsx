@@ -48,7 +48,7 @@ const NewWorkout = () => {
     error,
   } = useMutation(
     "createNewWorkout",
-    ({ exerciseIds }) =>
+    (exerciseIds) =>
       $api({
         url: "/workouts",
         type: "POST",
@@ -60,13 +60,15 @@ const NewWorkout = () => {
       },
       onSuccess() {
         setIsWorkoutCreationSuccess(true);
+        setExercises([]);
+        setNameValue("");
       },
     }
   );
   const handleSubmit = (e) => {
     e.preventDefault();
     const exerciseIds = exercises.map((exercise) => exercise.value);
-    createNewWorkout({ exerciseIds });
+    createNewWorkout(exerciseIds);
   };
 
   setTimeout(() => {
