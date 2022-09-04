@@ -1,16 +1,23 @@
 @import '../../sass/_animations'
 .alert
     width: 100%
-    background-color: #57e7c2
+    background-color: #5be7c4
     color: #222
     margin-bottom: 1rem
     animation: opacity .4s
     border-radius: 10px
+    display: flex
+    position: relative
     &.error
-        bakcground-color: #ff2e63
+        background-color: #f8265b
         color: #fff
     &.info
-        bakcground-color: #50c1e9
+        background-color: #50c1e9
     &.warning
-        bakcground-color: #f75940
+        background-color: #f75940
         color: #fff
+.x_icon
+    position: absolute
+    right: 5px
+    top: 1.5px
+    cursor: pointer

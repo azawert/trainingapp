@@ -1,7 +1,6 @@
-import React from "react";
 import styles from "./Alert.module.sass";
 import cn from "classnames";
-const Alert = ({ type = "success", text = "Успех" }) => {
+const Alert = ({ type = "error", text = "Успех" }) => {
   return (
     <div
       className={cn(styles.alert, {

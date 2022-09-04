@@ -6,17 +6,22 @@ import Button from "../../../ui/Button/Button.jsx";
 import styles from "./Auth.module.sass";
 import Alert from "../../../ui/Alert/Alert";
 import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { $api } from "../../../api/api";
 import Loader from "../../../ui/Loader";
+import { useAuth } from "../../../hooks/useAuth";
 const Auth = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [isPasswordValid, setIsPasswordValid] = React.useState(true);
   const [type, setType] = React.useState("auth"); //auth || reg
-
+  const { setIsAuth } = useAuth();
+  const navigate = useNavigate();
   const {
     mutate: register,
     isLoading,
     error,
+    isError,
   } = useMutation(
     "Registration",
     () =>
@@ -28,10 +33,15 @@ const Auth = () => {
       }),
     {
       onSuccess(data) {
-        console.log(data);
+        localStorage.setItem("token", data.token);
+        setEmail("");
+        setPassword("");
+        setIsAuth(true);
+        navigate("/");
       },
-      onError(e) {
-        alert(e);
+      onError() {
+        console.log(isError);
+        console.log(error);
       },
     }
   );
@@ -46,7 +56,11 @@ const Auth = () => {
     if (type === "auth") {
       console.log("auth");
     } else {
-      register();
+      if (password.length > 5) {
+        register();
+      } else {
+        setIsPasswordValid(false);
+      }
     }
   };
 
@@ -54,7 +68,12 @@ const Auth = () => {
     <>
       <Layout image={bgImage} text="Регистрация" />
       <div className="wrapper-inner-page">
-        {error && <Alert type="error" text={error} />}
+        {isError && (
+          <Alert type="error" text={"Пользователь уже зарегестрирован"} />
+        )}
+        {!isPasswordValid && (
+          <Alert type="error" text="Пароль должен быть больше 5 символов" />
+        )}
         {isLoading && <Loader />}
         <form onSubmit={handleSubmit}>
           <Field

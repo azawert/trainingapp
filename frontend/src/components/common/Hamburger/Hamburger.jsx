@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import hamburgerImage from "../../../images/header/hamburger.svg";
 import hamburgerClose from "../../../images/header/hamburger-close.svg";
 import styles from "./Hamburger.module.sass";
@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 const Hamburger = () => {
   const location = useLocation();
   const [isShow, setIsShow] = React.useState(false);
+
   const options = [
     {
       name: "Workouts",
@@ -28,8 +29,8 @@ const Hamburger = () => {
         <button type="button">
           <img
             src={hamburgerClose}
-            alt="auth"
-            onClick={() => setIsShow(!isShow)}
+            alt="menu"
+            onClick={() => setIsShow(false)}
             height={"24px"}
           ></img>
           <ul className={styles.menu}>
@@ -53,8 +54,8 @@ const Hamburger = () => {
         <button type="button">
           <img
             src={hamburgerImage}
-            alt="auth"
-            onClick={() => setIsShow(!isShow)}
+            alt="menu"
+            onClick={() => setIsShow(true)}
             height={"24px"}
           ></img>
         </button>
