@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Counters.module.sass";
+import cn from "classnames";
 
 const Counters = ({ minutes, workouts, kg }) => {
   return (

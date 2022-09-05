@@ -86,6 +86,7 @@ const NewWorkout = () => {
           <Alert type="success" text="Тренировка сохранена" />
         )}
         {errorInCreation && <Alert type="error" text={error} />}
+        {isCreatingLoading && <Alert type="info" text="Загрузка..." />}
         <form onSubmit={handleSubmit}>
           <Field
             placeholder="Введите название тренировки..."

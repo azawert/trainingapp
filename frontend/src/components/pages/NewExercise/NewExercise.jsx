@@ -58,7 +58,7 @@ const NewExercise = () => {
     "Загрузка..."
   ) : (
     <>
-      <Layout image={bgImage} text="Создать новую тренировку" />
+      <Layout image={bgImage} text="Создать новое упражнение" />
       <div className="wrapper-inner-page">
         <form onSubmit={handleSubmit}>
           {isSuccess && isAlertVisible && (
