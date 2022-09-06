@@ -12,16 +12,6 @@ import { useAuth } from "../../../hooks/useAuth";
 import { $api } from "../../../api/api";
 import { useQueryClient, useQuery } from "react-query";
 const Home = () => {
-  // const [data, setData] = React.useState({});
-  // React.useEffect(() => {
-  //   async function fetchData() {
-  //     await $api({ url: "/users/profile" }).then((data) => {
-  //       setData(data);
-  //     });
-  //   }
-  //   fetchData();
-  // }, []);
-
   const { isAuth, setIsAuth } = useAuth();
   const queryClient = useQueryClient();
   const { data, isSuccess, isLoading } = useQuery(
@@ -49,7 +39,7 @@ const Home = () => {
             className={styles.button}
           />
         </Link>
-        <h1 className={styles.heading}>EXERCSISES FOR</h1>
+        <h1 className={styles.heading}>Тренировки :)</h1>
         {isAuth && isSuccess ? (
           <Counters
             minutes={data.minutes}

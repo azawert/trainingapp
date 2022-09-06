@@ -44,7 +44,7 @@ export const addNewWorkout = asyncHandler(async (req, res) => {
 //@route get /api/workout/:id
 // @access only logged in
 
-export const getWorkout = async (req, res) => {
+export const getWorkout = asyncHandler(async (req, res) => {
   const workout = await Workout.findById(req.params.id)
     .populate("exercises")
     .lean();
@@ -53,11 +53,11 @@ export const getWorkout = async (req, res) => {
     res.json({ ...workout, minutes });
   }
   if (!workout) {
-    return res.status(400).json({
+    return res.status(404).json({
       errorMessage: "Тренировка не найдена",
     });
   }
-};
+});
 
 //@desc update workouts
 //@route PUT /api/workouts

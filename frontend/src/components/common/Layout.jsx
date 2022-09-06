@@ -4,7 +4,7 @@ import cn from "classnames";
 
 import styles from "./Layout.module.sass";
 
-const Layout = ({ children, image, text = "", profileImage }) => {
+const Layout = ({ children, image, text = "", minutes, profileImage }) => {
   return (
     <>
       <div
@@ -23,7 +23,17 @@ const Layout = ({ children, image, text = "", profileImage }) => {
             alt="profilePic"
           ></img>
         )}
-        {text && <h1 className={styles.heading}>{text}</h1>}
+        {minutes && <p>{minutes} min.</p>}
+        {text && (
+          <h1
+            className={cn(styles.heading, {
+              [styles.headingForWorkout]: minutes,
+            })}
+          >
+            {text}
+          </h1>
+        )}
+
         {children && <div>{children}</div>}
       </div>
     </>

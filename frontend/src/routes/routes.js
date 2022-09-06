@@ -1,5 +1,6 @@
 import NotFound from "../components/common/NotFound/NotFound";
 import Auth from "../components/pages/Auth/Auth";
+import Workout from "../components/pages/Workout/Workout";
 import Home from "../components/pages/Home/Home";
 import NewExercise from "../components/pages/NewExercise/NewExercise";
 import NewWorkout from "../components/pages/NewWorkout/NewWorkout";
@@ -34,6 +35,11 @@ export const routes = [
   {
     path: "/profile",
     element: Profile,
+    auth: true,
+  },
+  {
+    path: "/workout/:id",
+    element: Workout,
     auth: true,
   },
 ];
