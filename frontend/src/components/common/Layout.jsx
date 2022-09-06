@@ -4,7 +4,14 @@ import cn from "classnames";
 
 import styles from "./Layout.module.sass";
 
-const Layout = ({ children, image, text = "", minutes, profileImage }) => {
+const Layout = ({
+  children,
+  image,
+  text = "",
+  minutes,
+  profileImage,
+  backlink,
+}) => {
   return (
     <>
       <div
@@ -15,7 +22,7 @@ const Layout = ({ children, image, text = "", minutes, profileImage }) => {
           backgroundImage: `url(${image})`,
         }}
       >
-        <Header />
+        <Header backlink={backlink} />
         {profileImage && (
           <img
             src={profileImage}

@@ -67,6 +67,9 @@ const NewWorkout = () => {
   );
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (exercises.length === 0) {
+      throw new Error("Добавьте упражнения");
+    }
     const exerciseIds = exercises.map((exercise) => exercise.value);
     createNewWorkout(exerciseIds);
   };
@@ -81,11 +84,13 @@ const NewWorkout = () => {
     <>
       <Layout image={bgImage} text="Создать новую тренировку" />
       <div className="wrapper-inner-page">
-        {fetchError && <Alert text={fetchError} type="error" />}
+        {fetchError && <Alert text={"Не пошла родная"} type="error" />}
         {isWorkoutCreationSuccess && (
           <Alert type="success" text="Тренировка сохранена" />
         )}
-        {errorInCreation && <Alert type="error" text={error} />}
+        {errorInCreation && (
+          <Alert type="error" text={"Заполните все необходимые поля"} />
+        )}
         {isCreatingLoading && <Alert type="info" text="Загрузка..." />}
         <form onSubmit={handleSubmit}>
           <Field

@@ -6,7 +6,7 @@ import logInImage from "../../../images/header/log-in-svgrepo-com.svg";
 import Hamburger from "../Hamburger/Hamburger";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
-const Header = () => {
+const Header = ({ backlink }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuth, setIsAuth } = useAuth();
@@ -20,7 +20,7 @@ const Header = () => {
         <button type="button">
           <img
             src={arrowImage}
-            onClick={() => navigate("/")}
+            onClick={() => (backlink ? navigate(`${backlink}`) : navigate("/"))}
             alt="arrow-back"
           ></img>
         </button>

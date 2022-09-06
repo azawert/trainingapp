@@ -13,11 +13,9 @@ const Exercise = () => {
   const [errorValue, setErrorValue] = React.useState("");
   const [isAlertVisible, setIsAlertVisible] = React.useState(false);
   const [isErrorAlertVisible, setIsErrorAlertVisible] = React.useState(false);
-  const [isExerciseDone, setIsExerciseDone] = React.useState(false);
-  const [doneExerciseId, setDoneExerciseId] = React.useState();
 
   const { id } = useParams();
-  const { mutate, isLoading, error, isSuccess, data } = useMutation(
+  const { mutate, isLoading, data } = useMutation(
     "GetWorkout",
     () =>
       $api({
@@ -36,13 +34,18 @@ const Exercise = () => {
   React.useEffect(() => {
     mutate();
   }, []);
-  data && console.log(data);
+
   return isLoading
     ? "Загрузка..."
     : data && (
         <>
-          <Layout image={bgImage} text={data.name} minutes={data.minutes} />
-          {/* <div className="wrapper-inner-page"> */}
+          <Layout
+            backlink={`/workouts`}
+            image={bgImage}
+            text={data.name}
+            minutes={data.minutes}
+          />
+
           {errorValue && isErrorAlertVisible && (
             <Alert type="error" text={"Не удалось найти тренировку..."} />
           )}
@@ -60,7 +63,6 @@ const Exercise = () => {
               </div>
             );
           })}
-          {/* </div> */}
         </>
       );
 };
