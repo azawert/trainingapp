@@ -9,8 +9,16 @@ const Alert = ({ type = "error", text }) => {
         [styles.info]: type === "info",
         [styles.success]: type === "success",
       })}
+      style={{
+        height: 50,
+        textAlign: "center",
+        display: "flex",
+        padding: "5px",
+      }}
     >
-      <p className={styles.text}>{text}</p>
+      <p className={styles.text} style={{ alignSelf: "center" }}>
+        {text}
+      </p>
     </div>
   );
 };

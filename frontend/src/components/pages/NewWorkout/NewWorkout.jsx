@@ -19,6 +19,9 @@ const NewWorkout = () => {
   const [isWorkoutCreationSuccess, setIsWorkoutCreationSuccess] =
     React.useState(false);
   const [errorInCreation, setErrorInCreation] = React.useState(false);
+  const [validationError, setValidationError] = React.useState("");
+  const [isValidationError, setIsValidationError] = React.useState(false);
+
   const onChangeNameField = (e) => {
     setNameValue(e.target.value);
     console.log(nameValue);
@@ -68,8 +71,10 @@ const NewWorkout = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (exercises.length === 0) {
-      throw new Error("Добавьте упражнения");
+      setValidationError("Необходимо добавить упражнения!");
+      setIsValidationError(true);
     }
+
     const exerciseIds = exercises.map((exercise) => exercise.value);
     createNewWorkout(exerciseIds);
   };
@@ -78,8 +83,9 @@ const NewWorkout = () => {
     setFetchError(false);
     setIsWorkoutCreationSuccess(false);
     setErrorInCreation(false);
+    // setIsValidationError(false);
   }, 10000);
-
+  console.log(exercises);
   return (
     <>
       <Layout image={bgImage} text="Создать новую тренировку" />
@@ -91,6 +97,7 @@ const NewWorkout = () => {
         {errorInCreation && (
           <Alert type="error" text={"Заполните все необходимые поля"} />
         )}
+        {isValidationError && <Alert type="error" text={validationError} />}
         {isCreatingLoading && <Alert type="info" text="Загрузка..." />}
         <form onSubmit={handleSubmit}>
           <Field

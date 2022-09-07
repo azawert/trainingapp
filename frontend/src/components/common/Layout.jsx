@@ -11,6 +11,7 @@ const Layout = ({
   minutes,
   profileImage,
   backlink,
+  height,
 }) => {
   return (
     <>
@@ -20,6 +21,7 @@ const Layout = ({
         })}
         style={{
           backgroundImage: `url(${image})`,
+          height: height,
         }}
       >
         <Header backlink={backlink} />
@@ -30,16 +32,18 @@ const Layout = ({
             alt="profilePic"
           ></img>
         )}
-        {minutes && <p>{minutes} min.</p>}
-        {text && (
-          <h1
-            className={cn(styles.heading, {
-              [styles.headingForWorkout]: minutes,
-            })}
-          >
-            {text}
-          </h1>
-        )}
+        <div>
+          {minutes && <p>{minutes} min.</p>}
+          {text && (
+            <h1
+              className={cn(styles.heading, {
+                [styles.headingForWorkout]: minutes,
+              })}
+            >
+              {text}
+            </h1>
+          )}
+        </div>
 
         {children && <div>{children}</div>}
       </div>

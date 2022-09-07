@@ -8,8 +8,8 @@ import bgImage from "../../../images/new_exercise.jpg";
 
 import styles from "./Workout.module.sass";
 import Alert from "../../../ui/Alert/Alert";
-import { useParams } from "react-router-dom";
-const Exercise = () => {
+import { Link, useParams } from "react-router-dom";
+const Workout = () => {
   const [errorValue, setErrorValue] = React.useState("");
   const [isAlertVisible, setIsAlertVisible] = React.useState(false);
   const [isErrorAlertVisible, setIsErrorAlertVisible] = React.useState(false);
@@ -49,17 +49,19 @@ const Exercise = () => {
           {errorValue && isErrorAlertVisible && (
             <Alert type="error" text={"Не удалось найти тренировку..."} />
           )}
-          {data.exercises.map((exercise, id) => {
+          {data.exercises.map((exercise, index) => {
             return (
               <div className={styles.page__wrapper}>
                 <div className={styles.exercise__wrapper}>
-                  <img
-                    src={`../uploads/${exercise.imageName}.svg`}
-                    alt={"exercise icon"}
-                  ></img>
-                  <div>{exercise.name}</div>
+                  <Link to={`/exercises/${exercise._id}`}>
+                    <img
+                      src={`../uploads/${exercise.imageName}.svg`}
+                      alt={"exercise icon"}
+                    ></img>
+                    <div>{exercise.name}</div>
+                  </Link>
                 </div>
-                {id % 2 !== 0 && <div className={styles.line}></div>}
+                {index % 2 !== 0 && <div className={styles.line}></div>}
               </div>
             );
           })}
@@ -67,4 +69,4 @@ const Exercise = () => {
       );
 };
 
-export default Exercise;
+export default Workout;

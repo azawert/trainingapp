@@ -20,7 +20,7 @@ const Header = ({ backlink }) => {
         <button type="button">
           <img
             src={arrowImage}
-            onClick={() => (backlink ? navigate(`${backlink}`) : navigate("/"))}
+            onClick={() => (backlink ? navigate(-1) : navigate("/"))}
             alt="arrow-back"
           ></img>
         </button>

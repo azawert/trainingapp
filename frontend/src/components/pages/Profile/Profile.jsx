@@ -30,14 +30,21 @@ const Profile = () => {
     "Loading..."
   ) : (
     <div className={styles.wrapper}>
-      <Layout image={bgImage} text={data.email} profileImage={profileimage}>
+      <Layout
+        height={365}
+        image={bgImage}
+        text={data.email}
+        profileImage={profileimage}
+      >
         {isAuth && isSuccess && data ? (
-          <div className={styles.counters}>
-            <Counters
-              minutes={data.minutes}
-              workouts={data.workouts}
-              kg={data.kg}
-            />
+          <div>
+            <div className={styles.counters}>
+              <Counters
+                minutes={data.minutes}
+                workouts={data.workouts}
+                kg={data.kg}
+              />
+            </div>
           </div>
         ) : (
           "Не удалось получить данные профиля..."
