@@ -12,6 +12,7 @@ const Layout = ({
   profileImage,
   backlink,
   height,
+  exerciseImage,
 }) => {
   return (
     <>
@@ -32,8 +33,15 @@ const Layout = ({
             alt="profilePic"
           ></img>
         )}
-        <div>
-          {minutes && <p>{minutes} min.</p>}
+        <div className={styles.exercisePageWrapper}>
+          {minutes && <p>{minutes} min</p>}
+          {exerciseImage && (
+            <img
+              src={`../uploads/${exerciseImage}White.svg`}
+              alt={"exerciseimage"}
+              height={34}
+            ></img>
+          )}
           {text && (
             <h1
               className={cn(styles.heading, {

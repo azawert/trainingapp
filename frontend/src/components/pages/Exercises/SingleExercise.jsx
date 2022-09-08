@@ -14,7 +14,7 @@ const SingleExercise = () => {
     "GetExercise",
     () =>
       $api({
-        url: `/exercises/${id}`,
+        url: `/exercises/log/${id}`,
       }),
     {}
   );
@@ -30,24 +30,15 @@ const SingleExercise = () => {
           <Layout
             backlink={true}
             image={bgImage}
-            text={data.name}
+            text={data.exercise.name}
+            exerciseImage={data.exercise.imageName}
             minutes={data.minutes}
           />
 
-          {/* {data.exercises.map((exercise, id) => {
-            return (
-              <div className={styles.page__wrapper}>
-                <div className={styles.exercise__wrapper}>
-                  <img
-                    src={`../uploads/${exercise.imageName}.svg`}
-                    alt={"exercise icon"}
-                  ></img>
-                  <div>{exercise.name}</div>
-                </div>
-                {id % 2 !== 0 && <div className={styles.line}></div>}
-              </div>
-            );
-          })} */}
+          <div className={styles.page__wrapper}>
+            <div className={styles.exercise__wrapper}></div>
+            {id % 2 !== 0 && <div className={styles.line}></div>}
+          </div>
         </>
       );
 };

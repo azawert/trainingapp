@@ -8,14 +8,18 @@ import bgImage from "../../../images/new_exercise.jpg";
 
 import styles from "./Workout.module.sass";
 import Alert from "../../../ui/Alert/Alert";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 const Workout = () => {
   const [errorValue, setErrorValue] = React.useState("");
   const [isAlertVisible, setIsAlertVisible] = React.useState(false);
   const [isErrorAlertVisible, setIsErrorAlertVisible] = React.useState(false);
-
+  const navigate = useNavigate();
   const { id } = useParams();
-  const { mutate, isLoading, data } = useMutation(
+  const {
+    mutate,
+    isLoading,
+    data: dataWorkout,
+  } = useMutation(
     "GetWorkout",
     () =>
       $api({
@@ -27,6 +31,22 @@ const Workout = () => {
       },
     }
   );
+
+  const { mutate: mutateLog, isLoading: isLoadingLog } = useMutation(
+    "CreateExerciseLog",
+    ({ exId, times }) =>
+      $api({
+        url: `/exercises/log`,
+        type: "POST",
+        body: { exerciseId: exId, times },
+      }),
+    {
+      onSuccess(data) {
+        data && navigate(`/exercises/${data._id}`);
+      },
+    }
+  );
+
   setTimeout(() => {
     setIsAlertVisible(false);
     setIsErrorAlertVisible(false);
@@ -37,29 +57,34 @@ const Workout = () => {
 
   return isLoading
     ? "Загрузка..."
-    : data && (
+    : dataWorkout && (
         <>
           <Layout
             backlink={`/workouts`}
             image={bgImage}
-            text={data.name}
-            minutes={data.minutes}
+            text={dataWorkout.name}
+            minutes={dataWorkout.minutes}
           />
 
           {errorValue && isErrorAlertVisible && (
             <Alert type="error" text={"Не удалось найти тренировку..."} />
           )}
-          {data.exercises.map((exercise, index) => {
+          {dataWorkout.exercises.map((exercise, index) => {
             return (
               <div className={styles.page__wrapper}>
                 <div className={styles.exercise__wrapper}>
-                  <Link to={`/exercises/${exercise._id}`}>
+                  <button
+                    aria-label="go to exercise"
+                    onClick={() => {
+                      mutateLog({ exId: exercise._id, times: exercise.times });
+                    }}
+                  >
                     <img
                       src={`../uploads/${exercise.imageName}.svg`}
                       alt={"exercise icon"}
                     ></img>
                     <div>{exercise.name}</div>
-                  </Link>
+                  </button>
                 </div>
                 {index % 2 !== 0 && <div className={styles.line}></div>}
               </div>

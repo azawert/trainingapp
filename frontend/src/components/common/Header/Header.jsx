@@ -17,7 +17,7 @@ const Header = ({ backlink }) => {
   return (
     <header className={styles.header}>
       {location.pathname !== "/" ? (
-        <button type="button">
+        <button type="button" className={styles.headerButton}>
           <img
             src={arrowImage}
             onClick={() => (backlink ? navigate(-1) : navigate("/"))}
