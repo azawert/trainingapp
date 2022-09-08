@@ -31,7 +31,7 @@ const Home = () => {
   ) : (
     <div className={styles.wrapper}>
       <Layout image={bgImage}>
-        <Link to="/new-workout">
+        <Link to="/new-workout" className={styles.button_wrapper}>
           <Button
             type="main"
             text="New"
