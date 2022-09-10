@@ -4,7 +4,8 @@ import { $api } from "../../../api/api";
 import Layout from "../../common/Layout";
 
 import bgImage from "../../../images/singleExercise.jpg";
-
+import notCompletedCheckbox from "../../../images/completed.svg";
+import completedCheckbox from "../../../images/completed_checked.svg";
 import styles from "./Exercise.module.sass";
 import Alert from "../../../ui/Alert/Alert";
 import { useParams } from "react-router-dom";
@@ -34,10 +35,46 @@ const SingleExercise = () => {
             exerciseImage={data.exercise.imageName}
             minutes={data.minutes}
           />
-
-          <div className={styles.page__wrapper}>
-            <div className={styles.exercise__wrapper}></div>
-            {id % 2 !== 0 && <div className={styles.line}></div>}
+          <div className={styles.wrapper}>
+            <div className={styles.row}>
+              <div>
+                <span>Previous</span>
+              </div>
+              <div>
+                <span>Repeat & weight</span>
+              </div>
+              <div>
+                <span>Completed</span>
+              </div>
+            </div>
+            {data.times.map((item, index) => {
+              console.log(item);
+              return (
+                <div>
+                  <div className={styles.opacity}>
+                    <input type={"number"} value={`${item.prevWeight}`} />
+                    <i>/</i>
+                    <input type={"number"} value={`${item.prevReps}`} />
+                  </div>
+                  <div>
+                    <input type={"number"} value={`${item.weight}`} />
+                    <i>/</i>
+                    <input type={"number"} value={`${item.reps}`} />
+                  </div>
+                  <div>
+                    <img
+                      alt="checkbox"
+                      src={
+                        item.completed
+                          ? completedCheckbox
+                          : notCompletedCheckbox
+                      }
+                      className={styles.checkbox}
+                    ></img>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </>
       );

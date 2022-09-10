@@ -1,0 +1,20 @@
+@import '../../../sass/_variables'
+.wrapper
+    border-radius: 10px
+    background-color: $dark-purple
+    min-height: 500px
+    padding: 0 30px
+    .row
+        display: flex
+        align-items: center
+        div
+            width: 30%
+            color: #fff
+            text-align: center
+            font-size: 16px
+            &:nth-child(2)
+                width: 40%
+                border-left: 1px solid $purple
+                border-right: 1px solid $purple
+        &:first-child
+            border-bottom: 1px solid $purple
