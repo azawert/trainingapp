@@ -18,12 +18,12 @@ const Workout = () => {
   const {
     mutate,
     isLoading,
-    data: dataWorkout,
+    data,
   } = useMutation(
     "GetWorkout",
     () =>
       $api({
-        url: `/workouts/${id}`,
+        url: `/workouts/log/${id}`,
       }),
     {
       onError() {
@@ -31,8 +31,22 @@ const Workout = () => {
       },
     }
   );
+  const { mutate: completedLog,  } = useMutation(
+    "CompleteWorkoutLog",
+    ({ logId }) =>
+      $api({
+        url: `/exercises/log`,
+        type: "POST",
+        body: { logId, completed:true },
+      }),
+    {
+      onSuccess(data) {
+        data && navigate(`/workouts`);
+      },
+    }
+  );
 
-  const { mutate: mutateLog, isLoading: isLoadingLog } = useMutation(
+  const { mutate: mutateLog, } = useMutation(
     "CreateExerciseLog",
     ({ exId, times }) =>
       $api({
@@ -54,22 +68,27 @@ const Workout = () => {
   React.useEffect(() => {
     mutate();
   }, []);
+  React.useEffect(()=>{
+if(data?.exerciseLogs && data.exerciseLogs.length===data.exerciseLogs.filter(log=>log.completed).length) {
+  
+}
+  },[data?.exerciseLogs])
 
   return isLoading
     ? "Загрузка..."
-    : dataWorkout && (
+    : data && (
         <>
           <Layout
             backlink={`/workouts`}
             image={bgImage}
-            text={dataWorkout.name}
-            minutes={dataWorkout.minutes}
+            text={data.workout.name}
+            minutes={data.minutes}
           />
 
           {errorValue && isErrorAlertVisible && (
             <Alert type="error" text={"Не удалось найти тренировку..."} />
           )}
-          {dataWorkout.exercises.map((exercise, index) => {
+          {data.exerciseLogs.map(({exercise}, index) => {
             return (
               <div className={styles.page__wrapper}>
                 <div className={styles.exercise__wrapper}>
@@ -80,7 +99,7 @@ const Workout = () => {
                     }}
                   >
                     <img
-                      src={`../uploads/${exercise.imageName}.svg`}
+                      src={`/uploads/${exercise.imageName}.svg`}
                       alt={"exercise icon"}
                     ></img>
                     <div>{exercise.name}</div>

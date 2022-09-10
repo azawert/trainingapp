@@ -16,7 +16,7 @@ export const updateExerciseLog = asyncHandler(async (req, res) => {
   }
 
   let newTimes = editLog.times;
-  if ((!timeIndex && timeIndex !== 0) || !key || (!value && value !== false)) {
+  if ((!timeIndex && timeIndex !== 0) || !key || (!value && value !== false && value !== '')) {
     return res.status(404).json({
       errorMessage: "Вы не указали все поля",
     });
@@ -33,13 +33,13 @@ export const updateExerciseLog = asyncHandler(async (req, res) => {
 //@route PUT /api/exercise/log/complete
 //@access private
 export const updateCompleteExerciseLog = asyncHandler(async (req, res) => {
-  const { logId, completed } = req.body;
+  const { logId, completed} = req.body;
 
   const editLog = await ExerciseLog.findById(logId).populate(
     "exercise",
     "workout"
   );
-
+    console.log(editLog)
   if (!editLog) {
     return res.status(404).json({
       errorMessage: "Не найден лог.",

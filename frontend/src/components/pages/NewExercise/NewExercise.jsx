@@ -10,7 +10,7 @@ import Button from "../../../ui/Button/Button.jsx";
 import styles from "./NewExercise.module.sass";
 import Alert from "../../../ui/Alert/Alert";
 const NewExercise = () => {
-  const [name, setName] = React.useState("попа писи");
+  const [name, setName] = React.useState("");
   const [times, setTimes] = React.useState(1);
   const [imageName, setImageName] = React.useState("chest");
   const [errorValue, setErrorValue] = React.useState("");

@@ -6,10 +6,11 @@ import Layout from "../../common/Layout";
 import bgImage from "../../../images/new_exercise.jpg";
 
 import styles from "./Workout.module.sass";
-import Alert from "../../../ui/Alert/Alert";
-import { Link } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 
 const ListWorkouts = () => {
+  const navigate = useNavigate()
   const { mutate, isLoading, data } = useMutation(
     "GetWorkout",
     () =>
@@ -20,6 +21,22 @@ const ListWorkouts = () => {
       onError() {},
     }
   );
+  const { mutate:getSingleWorkoutLog,} = useMutation(
+    "GetWorkoutLog",
+    ({workoutId}) =>
+      $api({
+        url: `/workouts/log`,
+        type:"POST",
+        body:{workoutId}
+      }),
+    {
+     
+      onSuccess(data) {
+        navigate(`workout/${data._id}`)
+      }
+    }
+  );
+  
 
   React.useEffect(() => {
     mutate();
@@ -33,11 +50,11 @@ const ListWorkouts = () => {
       {data.map((workout, id) => {
         return (
           <div className={styles.page__wrapper}>
-            <Link to={`${workout._id}`}>
+            <button onClick={()=>getSingleWorkoutLog({workoutId:workout._id})}>
               <div className={styles.workout__wrapper}>
                 <div>{workout.name}</div>
               </div>
-            </Link>
+            </button>
             {id % 2 !== 0 && <div className={styles.line}></div>}
           </div>
         );

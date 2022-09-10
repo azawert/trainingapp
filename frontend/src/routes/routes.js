@@ -40,7 +40,7 @@ export const routes = [
     auth: true,
   },
   {
-    path: "/workouts/:id",
+    path: "workouts/workout/:id",
     element: Workout,
     auth: true,
   },

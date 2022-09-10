@@ -13,12 +13,14 @@ const Layout = ({
   backlink,
   height,
   exerciseImage,
+  isExercisePage
 }) => {
   return (
     <>
       <div
         className={cn(styles.wrapper, {
           [styles.otherPage]: !!text,
+          [styles.exercisePage]: isExercisePage
         })}
         style={{
           backgroundImage: `url(${image})`,

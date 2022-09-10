@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import WorkoutLog from "../../models/workoutLogModel.js";
 import Workout from "../../models/workoutModel.js";
-
+import ExerciseLog from "../../models/exerciseLogModel.js"
 //@desc Create new workoutLog
 //@rout POST /api/workout/log
 //@access Private
@@ -9,7 +9,7 @@ import Workout from "../../models/workoutModel.js";
 export const createNewWorkoutLog = asyncHandler(async (req, res) => {
   const { workoutId } = req.body;
 
-  const user = req.user._id;
+  const user = req.user.id;
   const workout = await Workout.findById(workoutId).populate("exercises");
   if (workout) {
     const workoutLog = await WorkoutLog.create({
@@ -29,7 +29,7 @@ export const createNewWorkoutLog = asyncHandler(async (req, res) => {
         exercise: ex._id,
         times: timesArray,
         workoutLog: workoutLog,
-        _id,
+        
       };
     });
     const createdExLogs = await ExerciseLog.insertMany(logs);

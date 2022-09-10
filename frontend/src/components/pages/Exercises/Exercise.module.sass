@@ -1,20 +1,55 @@
 @import '../../../sass/_variables'
 .wrapper
     border-radius: 10px
-    background-color: $dark-purple
-    min-height: 500px
-    padding: 0 30px
+    background-color: $purple
+    // min-height: 500px
+
+    width: 98%
+    margin: 0 auto
     .row
         display: flex
         align-items: center
+        .checkbox
+            cursor: pointer
         div
             width: 30%
             color: #fff
             text-align: center
             font-size: 16px
+            input[type=number]
+                -moz-appearance: textfield /* Firefox */
+
+            input
+                border: none
+                outline: none
+                background-color: transparent
+                width: 11%
+                color: #fff
+
             &:nth-child(2)
                 width: 40%
-                border-left: 1px solid $purple
-                border-right: 1px solid $purple
+                border-left: 1px solid $dark-purple
+                border-right: 1px solid $dark-purple
+
         &:first-child
-            border-bottom: 1px solid $purple
+            border-bottom: 1px solid $dark-purple
+        .opacity
+            input,i
+                color: darken(#fff,50% )
+
+    .completed
+        div
+
+            color: $accent
+
+            input,i
+                color: $accent !important
+                text-decoration: line-through
+                cursor: default
+i,span
+    color: #fff
+    font-style: normal
+
+i
+    margin: 0 2px
+    font-size: 12px

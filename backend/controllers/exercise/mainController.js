@@ -92,7 +92,7 @@ export const deleteExercise = asyncHandler(async (req, res) => {
 //@route GET /api/exercises
 // @access only logged in
 
-export const getExercises = async (req, res) => {
+export const getExercises = async ( res) => {
   const exercise = await Exercise.find({});
   if (!exercise) {
     return res.status(404).json({
